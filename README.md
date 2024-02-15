@@ -19,7 +19,7 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 
 ## Quick Start
 
-* Pick a name for the `$OVPN_DATA` data volume container. It's recommended to
+* Pick a name for the `$OVPN_DATA` data volume1 container. It's recommended to
   use the `ovpn-data-` prefix to operate seamlessly with the reference systemd
   service.  Users are encourage to replace `example` with a descriptive name of
   their choosing.
@@ -30,7 +30,7 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
   and certificates.  The container will prompt for a passphrase to protect the
   private key used by the newly generated certificate authority.
 
-      docker volume create --name $OVPN_DATA
+      docker volume1 create --name $OVPN_DATA
       docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM
       docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
 
@@ -87,7 +87,7 @@ If you prefer to use `docker-compose` please refer to the [documentation](docs/d
 
 ## How Does It Work?
 
-Initialize the volume container using the `kylemanna/openvpn` image with the
+Initialize the volume1 container using the `kylemanna/openvpn` image with the
 included scripts to automatically generate:
 
 - Diffie-Hellman parameters
@@ -99,9 +99,9 @@ included scripts to automatically generate:
 The OpenVPN server is started with the default run cmd of `ovpn_run`
 
 The configuration is located in `/etc/openvpn`, and the Dockerfile
-declares that directory as a volume. It means that you can start another
+declares that directory as a volume1. It means that you can start another
 container with the `-v` argument, and access the configuration.
-The volume also holds the PKI keys and certs so that it could be backed up.
+The volume1 also holds the PKI keys and certs so that it could be backed up.
 
 To generate a client certificate, `kylemanna/openvpn` uses EasyRSA via the
 `easyrsa` command in the container's path.  The `EASYRSA_*` environmental
@@ -173,8 +173,8 @@ OpenVPN with latest OpenSSL on Ubuntu 12.04 LTS).
 ### It Doesn't Stomp All Over the Server's Filesystem
 
 Everything for the Docker container is contained in two images: the ephemeral
-run time image (kylemanna/openvpn) and the `$OVPN_DATA` data volume. To remove
-it, remove the corresponding containers, `$OVPN_DATA` data volume and Docker
+run time image (kylemanna/openvpn) and the `$OVPN_DATA` data volume1. To remove
+it, remove the corresponding containers, `$OVPN_DATA` data volume1 and Docker
 image and it's completely removed.  This also makes it easier to run multiple
 servers since each lives in the bubble of the container (of course multiple IPs
 or separate ports are needed to communicate with the world).
@@ -192,7 +192,7 @@ of a guarantee in the future.
 * No longer uses serveconfig to distribute the configuration via https
 * Proper PKI support integrated into image
 * OpenVPN config files, PKI keys and certs are stored on a storage
-  volume for re-use across containers
+  volume1 for re-use across containers
 * Addition of tls-auth for HMAC security
 
 ## Originally Tested On
